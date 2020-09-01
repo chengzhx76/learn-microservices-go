@@ -1,0 +1,15 @@
+syntax="proto3";
+
+//    https://github.com/smallnest/grpc-examples
+// https://my.oschina.net/alexstocks/blog/387031
+// https://s0godoc0org.icopy.site/go.etcd.io/etcd/vendor/github.com/gogo/protobuf/gogoproto
+// https://www.jishuwen.com/d/pajl
+
+// https://www.jianshu.com/p/824e2d94a24f
+// https://tonybai.com/2020/04/24/gogoprotobuf-vs-goprotobuf-v1-and-v2/
+
+// https://www.jishuwen.com/d/pajl
+message People {
+  string name = 1;
+  int32 age = 2;
+}
