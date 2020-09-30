@@ -9,6 +9,10 @@ import (
 	"learn-microservices-go/grpc/simple_chat/chat"
 )
 
+// golang grpc 负载均衡 https://blog.csdn.net/weixin_33750452/article/details/92740999
+// gRPC服务发现&负载均衡 https://blog.csdn.net/qq_21816375/article/details/78159297
+// gRPC服务发现&负载均衡 https://www.cnblogs.com/FireworksEasyCool/p/12912839.html
+
 func main() {
 
 	var conn *grpc.ClientConn
