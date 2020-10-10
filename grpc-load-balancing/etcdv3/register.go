@@ -1,27 +1,25 @@
-package main
+package etcdv3
 
 import (
 	"context"
-	"github.com/coreos/etcd/clientv3"
 	"log"
 	"time"
-	//"go.etcd.io/etcd/clientv3"
+
+	"github.com/coreos/etcd/clientv3"
 )
 
-// https://bingjian-zhu.github.io/
-// https://www.cnblogs.com/FireworksEasyCool/
-
-// ServiceRegister 创建租约注册服务
+//ServiceRegister 创建租约注册服务
 type ServiceRegister struct {
-	cli           *clientv3.Client                        //etcd client
-	leaseID       clientv3.LeaseID                        //租约ID
-	keepAliveChan <-chan *clientv3.LeaseKeepAliveResponse //租约keepalieve相应chan
-	key           string                                  //key
-	val           string                                  //value
+	cli     *clientv3.Client //etcd client
+	leaseID clientv3.LeaseID //租约ID
+	//租约keepalieve相应chan
+	keepAliveChan <-chan *clientv3.LeaseKeepAliveResponse
+	key           string //key
+	val           string //value
 }
 
 //NewServiceRegister 新建注册服务
-func NewServiceRegister(endpoints []string, key, val string, lease int64) (*ServiceRegister, error) {
+func NewServiceRegister(endpoints []string, serName, addr string, lease int64) (*ServiceRegister, error) {
 	cli, err := clientv3.New(clientv3.Config{
 		Endpoints:   endpoints,
 		DialTimeout: 5 * time.Second,
@@ -32,8 +30,8 @@ func NewServiceRegister(endpoints []string, key, val string, lease int64) (*Serv
 
 	ser := &ServiceRegister{
 		cli: cli,
-		key: key,
-		val: val,
+		key: "/" + schema + "/" + serName + "/" + addr,
+		val: addr,
 	}
 
 	//申请租约设置时间keepalive
@@ -63,7 +61,6 @@ func (s *ServiceRegister) putKeyWithLease(lease int64) error {
 		return err
 	}
 	s.leaseID = resp.ID
-	log.Println(s.leaseID)
 	s.keepAliveChan = leaseRespChan
 	log.Printf("Put key:%s  val:%s  success!", s.key, s.val)
 	return nil
@@ -85,18 +82,4 @@ func (s *ServiceRegister) Close() error {
 	}
 	log.Println("撤销租约")
 	return s.cli.Close()
-}
-
-func main() {
-	var endpoints = []string{"180.76.183.68:2379"}
-	ser, err := NewServiceRegister(endpoints, "/web/node1", "localhost:8000", 5)
-	if err != nil {
-		log.Fatalln(err)
-	}
-	//监听续租相应chan
-	go ser.ListenLeaseRespChan()
-	select {
-	case <-time.After(20 * time.Second):
-		ser.Close()
-	}
 }

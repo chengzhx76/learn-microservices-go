@@ -9,6 +9,8 @@ import (
 	"google.golang.org/grpc"
 )
 
+// https://tutorialedge.net/golang/go-grpc-beginners-tutorial/#differences-between-grpc-and-rest
+
 func main() {
 
 	fmt.Println("Go gRPC Beginners Tutorial!")

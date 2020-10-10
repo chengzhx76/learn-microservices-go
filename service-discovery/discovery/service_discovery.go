@@ -50,7 +50,7 @@ func (s *ServiceDiscovery) WatchService(prefix string) error {
 	return nil
 }
 
-//watcher 监听前缀
+// watcher 监听前缀
 func (s *ServiceDiscovery) watcher(prefix string) {
 	watchChan := s.cli.Watch(context.Background(), prefix, clientv3.WithPrefix())
 	log.Printf("watching prefix:%s now...", prefix)
@@ -66,7 +66,7 @@ func (s *ServiceDiscovery) watcher(prefix string) {
 	}
 }
 
-//SetServiceList 新增服务地址
+// SetServiceList 新增服务地址
 func (s *ServiceDiscovery) SetServiceList(key, val string) {
 	s.lock.Lock()
 	defer s.lock.Unlock()
@@ -74,7 +74,7 @@ func (s *ServiceDiscovery) SetServiceList(key, val string) {
 	log.Println("put key :", key, "val:", val)
 }
 
-//DelServiceList 删除服务地址
+// DelServiceList 删除服务地址
 func (s *ServiceDiscovery) DelServiceList(key string) {
 	s.lock.Lock()
 	defer s.lock.Unlock()
@@ -82,7 +82,7 @@ func (s *ServiceDiscovery) DelServiceList(key string) {
 	log.Println("del key:", key)
 }
 
-//GetServices 获取服务地址
+// GetServices 获取服务地址
 func (s *ServiceDiscovery) GetServices() []string {
 	s.lock.Lock()
 	defer s.lock.Unlock()
