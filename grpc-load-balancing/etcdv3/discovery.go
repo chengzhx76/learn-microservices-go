@@ -37,7 +37,7 @@ func NewServiceDiscovery(endpoints []string) resolver.Builder {
 
 //Build 为给定目标创建一个新的`resolver`，当调用`grpc.Dial()`时执行
 func (s *ServiceDiscovery) Build(target resolver.Target, cc resolver.ClientConn, opts resolver.BuildOptions) (resolver.Resolver, error) {
-	log.Println("Build")
+	log.Println("==========> Build")
 	s.cc = cc
 	prefix := "/" + target.Scheme + "/" + target.Endpoint + "/"
 	//根据前缀获取现有的key
@@ -57,17 +57,18 @@ func (s *ServiceDiscovery) Build(target resolver.Target, cc resolver.ClientConn,
 
 // ResolveNow 监视目标更新
 func (s *ServiceDiscovery) ResolveNow(rn resolver.ResolveNowOptions) {
-	log.Println("ResolveNow")
+	log.Println("==========> ResolveNow")
 }
 
 //Scheme return schema
 func (s *ServiceDiscovery) Scheme() string {
+	log.Println("==========> Scheme")
 	return schema
 }
 
 //Close 关闭
 func (s *ServiceDiscovery) Close() {
-	log.Println("Close")
+	log.Println("==========> Close")
 	s.cli.Close()
 }
 
@@ -91,14 +92,14 @@ func (s *ServiceDiscovery) watcher(prefix string) {
 func (s *ServiceDiscovery) SetServiceList(key, val string) {
 	s.serverList.Store(key, resolver.Address{Addr: val})
 	s.cc.UpdateState(resolver.State{Addresses: s.getServices()})
-	log.Println("put key :", key, "val:", val)
+	log.Println("==========> put key :", key, "val:", val)
 }
 
 //DelServiceList 删除服务地址
 func (s *ServiceDiscovery) DelServiceList(key string) {
 	s.serverList.Delete(key)
 	s.cc.UpdateState(resolver.State{Addresses: s.getServices()})
-	log.Println("del key:", key)
+	log.Println("==========> del key:", key)
 }
 
 //GetServices 获取服务地址

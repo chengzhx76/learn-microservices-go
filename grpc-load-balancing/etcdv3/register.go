@@ -10,12 +10,11 @@ import (
 
 //ServiceRegister 创建租约注册服务
 type ServiceRegister struct {
-	cli     *clientv3.Client //etcd client
-	leaseID clientv3.LeaseID //租约ID
-	//租约keepalieve相应chan
-	keepAliveChan <-chan *clientv3.LeaseKeepAliveResponse
-	key           string //key
-	val           string //value
+	cli           *clientv3.Client                        //etcd client
+	leaseID       clientv3.LeaseID                        //租约ID
+	keepAliveChan <-chan *clientv3.LeaseKeepAliveResponse //租约keepalieve相应chan
+	key           string                                  //key
+	val           string                                  //value
 }
 
 //NewServiceRegister 新建注册服务
@@ -49,6 +48,7 @@ func (s *ServiceRegister) putKeyWithLease(lease int64) error {
 	if err != nil {
 		return err
 	}
+
 	//注册服务并绑定租约
 	_, err = s.cli.Put(context.Background(), s.key, s.val, clientv3.WithLease(resp.ID))
 	if err != nil {

@@ -5,7 +5,6 @@ import (
 	"github.com/coreos/etcd/clientv3"
 	"log"
 	"time"
-	//"go.etcd.io/etcd/clientv3"
 )
 
 // https://bingjian-zhu.github.io/
