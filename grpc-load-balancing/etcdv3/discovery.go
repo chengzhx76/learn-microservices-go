@@ -15,14 +15,14 @@ const schema = "grpclb"
 
 //ServiceDiscovery 服务发现
 type ServiceDiscovery struct {
-	cli        *clientv3.Client //etcd client
+	etcdClient *clientv3.Client //etcd client
 	cc         resolver.ClientConn
 	serverList sync.Map //服务列表
 }
 
 //NewServiceDiscovery  新建发现服务
 func NewServiceDiscovery(endpoints []string) resolver.Builder {
-	cli, err := clientv3.New(clientv3.Config{
+	etcdClient, err := clientv3.New(clientv3.Config{
 		Endpoints:   endpoints,
 		DialTimeout: 5 * time.Second,
 	})
@@ -31,7 +31,7 @@ func NewServiceDiscovery(endpoints []string) resolver.Builder {
 	}
 
 	return &ServiceDiscovery{
-		cli: cli,
+		etcdClient: etcdClient,
 	}
 }
 
@@ -41,7 +41,7 @@ func (s *ServiceDiscovery) Build(target resolver.Target, cc resolver.ClientConn,
 	s.cc = cc
 	prefix := "/" + target.Scheme + "/" + target.Endpoint + "/"
 	//根据前缀获取现有的key
-	resp, err := s.cli.Get(context.Background(), prefix, clientv3.WithPrefix())
+	resp, err := s.etcdClient.Get(context.Background(), prefix, clientv3.WithPrefix())
 	if err != nil {
 		return nil, err
 	}
@@ -69,12 +69,12 @@ func (s *ServiceDiscovery) Scheme() string {
 //Close 关闭
 func (s *ServiceDiscovery) Close() {
 	log.Println("==========> Close")
-	s.cli.Close()
+	s.etcdClient.Close()
 }
 
 //watcher 监听前缀
 func (s *ServiceDiscovery) watcher(prefix string) {
-	rch := s.cli.Watch(context.Background(), prefix, clientv3.WithPrefix())
+	rch := s.etcdClient.Watch(context.Background(), prefix, clientv3.WithPrefix())
 	log.Printf("watching prefix:%s now...", prefix)
 	for wresp := range rch {
 		for _, ev := range wresp.Events {
