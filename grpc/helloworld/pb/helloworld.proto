@@ -6,7 +6,8 @@ import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 
 // https://www.jianshu.com/p/824e2d94a24f
 // https://www.cnblogs.com/qq037/p/13283030.html?utm_source=tuicool
-// Protobuf 的 import 功能在 Go 项目中的实践 https://studygolang.com/articles/25743
+// Protobuf 的 import 功能在 Go 项目中的实践
+// https://studygolang.com/articles/25743
 
 
 // E:\golang\src\learn-microservices-go\grpc\helloworld\pb>protoc --proto_path=E:\golang\src --gofast_out=plugins=grpc:../../../../ E:\golang\src\learn-microservices-go\grpc\helloworld\pb\*.proto
