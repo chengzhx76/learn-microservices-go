@@ -15,11 +15,12 @@ require (
 	github.com/jonboulle/clockwork v0.2.2 // indirect
 	github.com/robertkrimen/otto v0.0.0-20200922221731-ef014fd054ac
 	github.com/soheilhy/cmux v0.1.4
+	github.com/tjfoc/gmsm v1.4.1
 	github.com/tmc/grpc-websocket-proxy v0.0.0-20200427203606-3cfed13b9966 // indirect
 	github.com/ugorji/go v1.2.1 // indirect
 	github.com/valyala/fasthttp v1.16.0
 	go.uber.org/zap v1.16.0 // indirect
-	golang.org/x/net v0.0.0-20200822124328-c89045814202
+	golang.org/x/net v0.0.0-20201010224723-4f7140c49acb
 	golang.org/x/time v0.0.0-20201208040808-7e3f01d25324 // indirect
 	google.golang.org/grpc v1.33.1
 	google.golang.org/grpc/examples v0.0.0-20201216234656-d79063fdde28 // indirect
