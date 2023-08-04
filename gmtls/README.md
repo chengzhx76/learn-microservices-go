@@ -2,14 +2,21 @@ https://www.jianshu.com/p/16210100d43d
 
 https://tonybai.com/?s=socket
 
+GO (国密,标准Https) 单向,双向认证Demo
+https://blog.csdn.net/HeroRazor/article/details/121633211
+
 
 https://github.com/bigwhite/experiments/tree/master/gmssl-examples
 
+## 国密双向认证抓包及分析
+https://blog.csdn.net/xihuanyuye/article/details/124831325
 
 
-Method:GET|Proto:HTTP/1.1|Host:umf.com:50055
-RequestURI:/UChains/poeBatch/batch/umfnet_poeBatch/test|UserAgent:Go-http-client/1.1|Referer:
-Scheme:|URL.Host:|URL.Port:
-URL.Path:/UChains/poeBatch/batch/umfnet_poeBatch/test|URL.RawPath:|URL.RawQuery:
-URL.RawFragment:|URL.EscapedFragment:|URL.EscapedPath:/UChains/poeBatch/batch/umfnet_poeBatch/test
-URL.RequestURI:/UChains/poeBatch/batch/umfnet_poeBatch/test|URL.String:/UChains/poeBatch/batch/umfnet_poeBatch/test
+## gmssl
+```
+查看证书内容
+gmssl x509 -in client-gm-auth-cert.crt -text -noout
+
+```
+
+

@@ -8,7 +8,7 @@ import (
 	"os"
 )
 
-func main() {
+func main2() {
 	/*config, err := createClientGMTLSConfig("D:\\golang\\src\\learn-microservices-go\\gmtls\\certs\\sm2_auth_key.pem",
 	"D:\\golang\\src\\learn-microservices-go\\gmtls\\certs\\sm2_auth_cert.cer",
 	[]string{"D:\\golang\\src\\learn-microservices-go\\gmtls\\certs\\SM2_CA.cer"})*/

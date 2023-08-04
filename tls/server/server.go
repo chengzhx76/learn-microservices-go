@@ -18,7 +18,7 @@ type myServer struct {
 }
 
 func (server *myServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello\n")
+	fmt.Fprintf(w, "Hello===>66\n")
 }
 
 func main() {

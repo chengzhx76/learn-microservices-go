@@ -1,10 +1,8 @@
 package main
 
 import (
-	"bytes"
 	"compress/flate"
 	"compress/gzip"
-	"context"
 	"fmt"
 	"github.com/tjfoc/gmsm/gmtls"
 	"github.com/tjfoc/gmsm/x509"
@@ -14,41 +12,35 @@ import (
 	"time"
 )
 
-func main() {
-	/*sigCert, err := gmtls.LoadX509KeyPair(
-		"D:\\golang\\src\\learn-microservices-go\\gmtls\\certs\\sm2_sign_cert.cer",
-		"D:\\golang\\src\\learn-microservices-go\\gmtls\\certs\\sm2_sign_key.pem")
+func main2() {
+
+	caCert := "D:\\golang\\src\\learn-microservices-go\\gmtls\\certs2\\ca-gm-cert.crt"
+
+	signFileKey := "D:\\golang\\src\\learn-microservices-go\\gmtls\\certs2\\server-gm-sign-key.pem"
+	signFileCert := "D:\\golang\\src\\learn-microservices-go\\gmtls\\certs2\\server-gm-sign-cert.crt"
+
+	encFileKey := "D:\\golang\\src\\learn-microservices-go\\gmtls\\certs2\\server-gm-enc-key.pem"
+	encFileCert := "D:\\golang\\src\\learn-microservices-go\\gmtls\\certs2\\server-gm-enc-cert.crt"
+
+	/*caCert := "D:\\golang\\src\\learn-microservices-go\\gmtls\\java\\chain-ca.crt"
+
+	signFileKey := "D:\\golang\\src\\learn-microservices-go\\gmtls\\java\\server_sign.key"
+	signFileCert := "D:\\golang\\src\\learn-microservices-go\\gmtls\\java\\server_sign.crt"
+
+	encFileKey := "D:\\golang\\src\\learn-microservices-go\\gmtls\\java\\server_enc.key"
+	encFileCert := "D:\\golang\\src\\learn-microservices-go\\gmtls\\java\\server_enc.crt"*/
+
+	sigCert, err := gmtls.LoadX509KeyPair(signFileCert, signFileKey)
 	if err != nil {
 		panic(err)
 	}
-	encCert, err := gmtls.LoadX509KeyPair(
-		"D:\\golang\\src\\learn-microservices-go\\gmtls\\certs\\sm2_enc_cert.cer",
-		"D:\\golang\\src\\learn-microservices-go\\gmtls\\certs\\sm2_enc_key.pem")
+	encCert, err := gmtls.LoadX509KeyPair(encFileCert, encFileKey)
 	if err != nil {
 		panic(err)
 	}
 
 	certPool := x509.NewCertPool()
-	cacert, err := os.ReadFile("D:\\golang\\src\\learn-microservices-go\\gmtls\\certs\\SM2_CA.cer")
-	if err != nil {
-		panic(err)
-	}*/
-
-	sigCert, err := gmtls.LoadX509KeyPair(
-		"D:\\golang\\src\\learn-microservices-go\\gmtls\\certs2\\server-gm-sign-cert.crt",
-		"D:\\golang\\src\\learn-microservices-go\\gmtls\\certs2\\server-gm-sign-key.pem")
-	if err != nil {
-		panic(err)
-	}
-	encCert, err := gmtls.LoadX509KeyPair(
-		"D:\\golang\\src\\learn-microservices-go\\gmtls\\certs2\\server-gm-enc-cert.crt",
-		"D:\\golang\\src\\learn-microservices-go\\gmtls\\certs2\\server-gm-enc-key.pem")
-	if err != nil {
-		panic(err)
-	}
-
-	certPool := x509.NewCertPool()
-	cacert, err := os.ReadFile("D:\\golang\\src\\learn-microservices-go\\gmtls\\certs2\\ca-gm-cert.crt")
+	cacert, err := os.ReadFile(caCert)
 	if err != nil {
 		panic(err)
 	}
@@ -74,7 +66,7 @@ func main() {
 	serveMux := http.NewServeMux()
 
 	serveMux.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
-		//_, _ = writer.Write([]byte(time.Now().Format("2006-01-02 15:04:05")))
+		_, _ = writer.Write([]byte(time.Now().Format("2006-01-02 15:04:05")))
 
 		p := fmt.Sprintf(`
 Method:%v|Proto:%v|Host:%v
@@ -93,7 +85,7 @@ URL.RequestURI:%v|URL.String:%v
 
 		fmt.Println(p)
 
-		req := request.Clone(context.Background())
+		/*req := request.Clone(context.Background())
 		reqBody, err := io.ReadAll(req.Body)
 		if err != nil {
 			http.Error(writer, err.Error(), http.StatusInternalServerError)
@@ -125,28 +117,8 @@ URL.RequestURI:%v|URL.String:%v
 			http.Error(writer, err.Error(), http.StatusBadGateway)
 			return
 		}
-		writer.Write(result)
-
-		// ==================================================
-
-		/*req.URL.Host = "10.10.77.118:7051"
-		request.RequestURI = ""
-
-		client := &http.Client{}
-		resp, err := client.Do(req)
-		if err != nil {
-			panic(err)
-		}
-		defer resp.Body.Close()
-		body, err := switchContentEncoding(resp)
-		if err != nil {
-			panic(err)
-		}
-		result, err := io.ReadAll(body)
-		if err != nil {
-			panic(err)
-		}
 		writer.Write(result)*/
+
 	})
 
 	fmt.Println(">> HTTP :50055 [GMSSL] Client Auth running...")

@@ -27,3 +27,5 @@ require (
 	google.golang.org/protobuf v1.25.0
 	gopkg.in/sourcemap.v1 v1.0.5 // indirect
 )
+
+replace github.com/tjfoc/gmsm => D:\golang\src\gmsm
