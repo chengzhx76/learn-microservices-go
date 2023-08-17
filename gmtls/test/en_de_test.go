@@ -8,6 +8,7 @@ import (
 	"github.com/tjfoc/gmsm/gmtls"
 	"github.com/tjfoc/gmsm/sm2"
 	"github.com/tjfoc/gmsm/x509"
+	"os"
 	"testing"
 )
 
@@ -40,11 +41,28 @@ func TestSm2_read_pub_pri(t *testing.T) {
 	}
 	fmt.Printf("read pubKey: \n%s\n", string(pubkeyPem))
 
-	/*err = os.WriteFile("priv.pem", privPem, os.FileMode(0644))
+	// --------------------------------------- 把公私钥写入文件 -----------------------------------------------
+	err = os.WriteFile("priv.pem", privPem, os.FileMode(0644))
 	if err != nil {
 		fmt.Printf("Error: write priv file: %v\n", err)
 		return
-	}*/
+	}
+
+	err = os.WriteFile("pubkey.pem", pubkeyPem, os.FileMode(0644))
+	if err != nil {
+		fmt.Printf("Error: write pubkeyPem file: %v\n", err)
+		return
+	}
+
+	// --------------------------------------- 从文件中读取公私钥 -----------------------------------------------
+	priKey, err = x509.ReadPrivateKeyFromPem(privPem, nil) // 读取密钥
+	if err != nil {
+		fmt.Printf("Error: read priKey file: %v\n", err)
+	}
+	pubKey, err = x509.ReadPublicKeyFromPem(pubkeyPem) // 读取公钥
+	if err != nil {
+		fmt.Printf("Error: read pubKey file: %v\n", err)
+	}
 
 }
 

@@ -8,14 +8,18 @@ import (
 	"os"
 )
 
-func main2() {
+var (
+	authPriKeyPath = "D:\\golang\\src\\learn-microservices-go\\gmtls\\certs2\\client-gm-auth-key.pem"
+	authCertPath   = "D:\\golang\\src\\learn-microservices-go\\gmtls\\certs2\\client-gm-auth-cert.crt"
+	rootCertPath   = "D:\\golang\\src\\learn-microservices-go\\gmtls\\certs2\\ca-gm-cert.crt"
+)
+
+func main() {
 	/*config, err := createClientGMTLSConfig("D:\\golang\\src\\learn-microservices-go\\gmtls\\certs\\sm2_auth_key.pem",
 	"D:\\golang\\src\\learn-microservices-go\\gmtls\\certs\\sm2_auth_cert.cer",
 	[]string{"D:\\golang\\src\\learn-microservices-go\\gmtls\\certs\\SM2_CA.cer"})*/
 
-	config, err := createClientGMTLSConfig("D:\\golang\\src\\learn-microservices-go\\gmtls\\certs2\\client-gm-auth-key.pem",
-		"D:\\golang\\src\\learn-microservices-go\\gmtls\\certs2\\client-gm-auth-cert.crt",
-		[]string{"D:\\golang\\src\\learn-microservices-go\\gmtls\\certs2\\ca-gm-cert.crt"})
+	config, err := createClientGMTLSConfig(authPriKeyPath, authCertPath, []string{rootCertPath})
 
 	if err != nil {
 		panic(err)

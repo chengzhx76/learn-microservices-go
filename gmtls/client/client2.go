@@ -16,7 +16,7 @@ var (
 	clientAuthFileCert = "D:\\golang\\src\\learn-microservices-go\\gmtls\\certs2\\client-gm-auth-cert.crt"
 )
 
-func main() {
+func main2() {
 	//gmSocketClientSingleAuth()
 	gmHttpClientDoubleAuth()
 }
