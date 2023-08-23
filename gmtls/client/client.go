@@ -9,15 +9,16 @@ import (
 )
 
 var (
-	authPriKeyPath = "D:\\golang\\src\\learn-microservices-go\\gmtls\\certs2\\client-gm-auth-key.pem"
-	authCertPath   = "D:\\golang\\src\\learn-microservices-go\\gmtls\\certs2\\client-gm-auth-cert.crt"
-	rootCertPath   = "D:\\golang\\src\\learn-microservices-go\\gmtls\\certs2\\ca-gm-cert.crt"
+	//authPriKeyPath = "D:\\golang\\src\\learn-microservices-go\\gmtls\\certs2\\client-gm-auth-key.pem"
+	//authCertPath   = "D:\\golang\\src\\learn-microservices-go\\gmtls\\certs2\\client-gm-auth-cert.crt"
+	//rootCertPath   = "D:\\golang\\src\\learn-microservices-go\\gmtls\\certs2\\ca-gm-cert.crt"
+
+	rootCertPath   = "D:\\golang\\src\\learn-microservices-go\\gmgrpc\\115_cert\\ca-gm-cert.crt"
+	authCertPath   = "D:\\golang\\src\\learn-microservices-go\\gmgrpc\\115_cert\\client-gm-auth-cert.crt"
+	authPriKeyPath = "D:\\golang\\src\\learn-microservices-go\\gmgrpc\\115_cert\\client-gm-auth-key.pem"
 )
 
 func main() {
-	/*config, err := createClientGMTLSConfig("D:\\golang\\src\\learn-microservices-go\\gmtls\\certs\\sm2_auth_key.pem",
-	"D:\\golang\\src\\learn-microservices-go\\gmtls\\certs\\sm2_auth_cert.cer",
-	[]string{"D:\\golang\\src\\learn-microservices-go\\gmtls\\certs\\SM2_CA.cer"})*/
 
 	config, err := createClientGMTLSConfig(authPriKeyPath, authCertPath, []string{rootCertPath})
 
@@ -26,13 +27,9 @@ func main() {
 	}
 	httpClient := gmtls.NewCustomHTTPSClient(config)
 
-	/*reqTicker := time.NewTicker(3 * time.Second)
-	defer reqTicker.Stop()
-	for {
-		<-reqTicker.C
-		go func() {*/
 	//response, err := httpClient.Get("https://umf.com:50055/UChains/poeBatch/batch/umfnet_poeBatch/test")
-	response, err := httpClient.Get("https://umf.com:18431/UChains/baseinfo")
+	//response, err := httpClient.Get("https://umf.com:18431/UChains/baseinfo")
+	response, err := httpClient.Get("https://10.10.77.115:18431/UChains/baseinfo")
 	if err != nil {
 		panic(err)
 	}
@@ -42,8 +39,6 @@ func main() {
 		panic(err)
 	}
 	fmt.Println("====> " + string(raw))
-	/*}()
-	}*/
 
 }
 
